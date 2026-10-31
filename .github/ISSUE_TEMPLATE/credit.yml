@@ -1,0 +1,29 @@
+name: Flowchart author / credit
+description: You made the "Getting Started with Executive Dysfunction" chart, or know who did.
+labels: [credit]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We'd love to credit the chart's creator properly and respect their wishes (including removal).
+  - type: input
+    id: who
+    attributes:
+      label: Creator's name or handle
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Link to the original post
+      description: The earliest source you can find.
+  - type: checkboxes
+    id: me
+    attributes:
+      label: Are you the creator?
+      options:
+        - label: Yes, I made this chart
+  - type: textarea
+    id: wishes
+    attributes:
+      label: Anything else? (preferred credit line, license, requests)

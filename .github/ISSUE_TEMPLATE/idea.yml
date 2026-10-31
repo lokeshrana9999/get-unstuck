@@ -1,0 +1,27 @@
+name: Idea or feedback
+description: Suggest a skill, routine, tone change, evidence correction or translation.
+labels: [enhancement]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Persona / tone
+        - Skills
+        - Routines
+        - Guardrails / safety
+        - Evidence levels
+        - Google Sheet log
+        - CLI prototype
+        - Docs / plan
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea
+      description: For evidence changes, please cite a peer-reviewed source (DOI if possible). Please don't share personal health information.
+    validations:
+      required: true

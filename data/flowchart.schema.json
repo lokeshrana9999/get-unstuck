@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/lokeshrana9999/get-unstuck/data/flowchart.schema.json",
+  "title": "Get Unstuck flowchart",
+  "description": "Machine-readable version of the 'Getting Started with Executive Dysfunction' flowchart, with evidence levels per strategy.",
+  "type": "object",
+  "required": ["meta", "evidence_levels", "start", "strategies", "nodes"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {"type": "string"},
+    "meta": {
+      "type": "object",
+      "required": ["title", "version", "chart_author"],
+      "properties": {
+        "title": {"type": "string"},
+        "version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+        "chart_author": {"type": "string"},
+        "chart_image": {"type": "string"},
+        "transcription": {"type": "string"},
+        "transcription_review": {"type": "string"},
+        "evidence_source": {"type": "string"},
+        "notes": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "evidence_levels": {
+      "type": "object",
+      "additionalProperties": {"type": "string"}
+    },
+    "start": {"$ref": "#/$defs/id"},
+    "strategies": {
+      "type": "object",
+      "propertyNames": {"$ref": "#/$defs/id"},
+      "additionalProperties": {"$ref": "#/$defs/strategy"}
+    },
+    "nodes": {
+      "type": "object",
+      "propertyNames": {"$ref": "#/$defs/id"},
+      "additionalProperties": {"$ref": "#/$defs/node"}
+    }
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "level": {
+      "enum": ["strong", "moderate_strong", "moderate", "weak_moderate", "weak", "none",
+               "partly_contradicted", "contradicted", "varies", "not_testable", "not_reviewed"]
+    },
+    "flow": {
+      "enum": ["triage", "break-it-down", "interrupt-inertia", "resist-impulses",
+               "make-it-tolerable", "wellbeing-check", "extension-or-delegate"]
+    },
+    "strategy": {
+      "type": "object",
+      "required": ["text", "evidence"],
+      "additionalProperties": false,
+      "properties": {
+        "text": {"type": "string", "minLength": 1, "description": "Chart text, verbatim."},
+        "evidence": {
+          "type": "object",
+          "required": ["claim", "principle", "refs"],
+          "additionalProperties": false,
+          "properties": {
+            "claim": {"$ref": "#/$defs/level", "description": "Rating of the chart's specific tip as used."},
+            "principle": {"$ref": "#/$defs/level", "description": "Rating of the nearest researched principle."},
+            "refs": {
+              "type": "array", "minItems": 1,
+              "items": {"type": "string", "pattern": "^[A-H][0-9]+$"},
+              "description": "Section IDs in source/evidence_review.md."
+            },
+            "pop_science_flag": {"enum": ["none", "mild", "moderate", "strong"]},
+            "note": {"type": "string"}
+          }
+        },
+        "safety": {"type": "string", "description": "Safety caveat the bot must show with this strategy."},
+        "bot_tip": {"type": "string", "description": "Evidence-informed tweak. NOT chart text."}
+      }
+    },
+    "option": {
+      "type": "object",
+      "required": ["label", "to"],
+      "additionalProperties": false,
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "to": {"$ref": "#/$defs/id"},
+        "via": {"type": "string", "description": "Page-continuation box(es) the connector passes through."},
+        "line": {"enum": ["solid", "dotted"], "default": "solid"},
+        "confidence": {"enum": ["traced", "most_likely"], "default": "traced"},
+        "interpretive": {"type": "boolean", "description": "True if this option is not in the chart."}
+      }
+    },
+    "node": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {"enum": ["question", "strategy", "redirect", "terminal"]},
+        "step": {"type": "integer", "minimum": 1, "maximum": 5},
+        "page": {"enum": [1, 2]},
+        "flow": {"$ref": "#/$defs/flow"},
+        "title": {"type": "string"},
+        "text": {"type": "string"},
+        "strategies": {"type": "array", "items": {"$ref": "#/$defs/id"}},
+        "options": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/option"}},
+        "next": {"$ref": "#/$defs/id"},
+        "next_interpretive": {"type": "boolean"},
+        "outcome": {"enum": ["start", "reschedule", "delegate", "partial", "accept", "push_through"]}
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"type": {"const": "question"}}},
+          "then": {"required": ["text", "options"], "not": {"anyOf": [{"required": ["next"]}, {"required": ["outcome"]}]}}
+        },
+        {
+          "if": {"properties": {"type": {"const": "strategy"}}},
+          "then": {"required": ["title", "strategies", "options"], "not": {"anyOf": [{"required": ["next"]}, {"required": ["outcome"]}]}}
+        },
+        {
+          "if": {"properties": {"type": {"const": "redirect"}}},
+          "then": {"required": ["text", "next"], "not": {"anyOf": [{"required": ["options"]}, {"required": ["outcome"]}]}}
+        },
+        {
+          "if": {"properties": {"type": {"const": "terminal"}}},
+          "then": {"required": ["text", "outcome"], "not": {"anyOf": [{"required": ["options"]}, {"required": ["next"]}]}}
+        }
+      ]
+    }
+  }
+}

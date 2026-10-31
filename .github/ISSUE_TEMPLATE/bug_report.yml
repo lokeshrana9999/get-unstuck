@@ -1,0 +1,25 @@
+name: Bug report
+description: Something in the CLI prototype, data or docs is broken.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please **don't include personal health information**.
+        If you are in crisis, please contact Tele-MANAS 14416 (India), 988 (US), Samaritans 116 123 (UK/IE), or https://findahelpline.com.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Include the command you ran and the output.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+  - type: input
+    id: env
+    attributes:
+      label: Python version and OS
+      placeholder: "Python 3.12, Ubuntu 24.04"

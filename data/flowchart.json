@@ -1,0 +1,586 @@
+{
+  "$schema": "./flowchart.schema.json",
+  "meta": {
+    "title": "Getting Started with Executive Dysfunction",
+    "version": "0.1.0",
+    "chart_author": "unknown",
+    "chart_image": "source/chart.png",
+    "transcription": "source/breakdown_v2.md",
+    "transcription_review": "source/review_v2.md",
+    "evidence_source": "source/evidence_review.md",
+    "notes": [
+      "Quoted chart text keeps the chart's own spelling and punctuation, including 'Accomodate' [sic] and hyphens such as '\"Scientist Hat\"- they do this task!'. Exceptions for plain-text terminals: the ellipsis character is written as '...', bold/italic/underline emphasis is dropped, and 'see pg 2' continuation boxes are folded into each option's 'via' field.",
+      "Option 'confidence' is 'traced' when the connector is confirmed by both breakdown_v2.md and review_v2.md, and 'most_likely' for the five routings review_v2.md says cannot be fully resolved at the chart's resolution.",
+      "Fields named 'bot_tip' and options marked 'interpretive: true' are NOT chart text. They are evidence-informed additions for the bot and must be presented as such.",
+      "The chart has several identical 'Hell yeah, get started!' and 'Go to Step 4.' starbursts. They are merged into single nodes here, except for the comic 'can't resist' exchange, which keeps its own sequence."
+    ]
+  },
+  "evidence_levels": {
+    "strong": "Several good-quality meta-analyses or RCTs support it, with consistent results.",
+    "moderate_strong": "Between moderate and strong; varies by item.",
+    "moderate": "RCTs or meta-analyses support it, but with real limits (small effects, different population, lab-only, heterogeneity).",
+    "weak_moderate": "Between weak and moderate.",
+    "weak": "Indirect, preliminary, correlational, or only from a neighbouring research area.",
+    "none": "No study of the claim was found (not the same as evidence it doesn't work).",
+    "partly_contradicted": "Part of the claim is contradicted by good evidence.",
+    "contradicted": "Good evidence says the claim or its mechanism is false.",
+    "varies": "Depends on the specific item.",
+    "not_testable": "Not testable as stated.",
+    "not_reviewed": "Not separately rated in evidence_review.md."
+  },
+  "start": "step1",
+  "strategies": {
+    "prioritize_matrix": {
+      "text": "Use an important/urgent matrix",
+      "evidence": {"claim": "none", "principle": "moderate", "refs": ["B1"], "pop_science_flag": "mild",
+        "note": "No controlled trial of the Eisenhower matrix. The 'mere urgency' bias it targets is real."}
+    },
+    "prioritize_top3": {
+      "text": "Pick the top 3 things or 1 next thing",
+      "evidence": {"claim": "none", "principle": "weak", "refs": ["B2"], "pop_science_flag": "none",
+        "note": "No study of capping a list at 3. '1 next thing' overlaps with implementation intentions (B3), which do have evidence."},
+      "bot_tip": "Turn the '1 next thing' into an if-then plan: 'At <time>, at <place>, I will <first action>.'"
+    },
+    "goblin_tools": {
+      "text": "Use Goblin Tools!",
+      "evidence": {"claim": "none", "principle": "none", "refs": ["B4"], "pop_science_flag": "none",
+        "note": "No peer-reviewed study of Goblin Tools or any AI task-breakdown app for ADHD."}
+    },
+    "smallest_step": {
+      "text": "What's the smallest, easiest, measurable first step?",
+      "evidence": {"claim": "moderate", "principle": "moderate", "refs": ["B3"], "pop_science_flag": "none",
+        "note": "Specific goals, near-term subgoals and if-then plans have support (d = 0.65 for implementation intentions, general populations). 'Easiest first' has no specific support."}
+    },
+    "ten_minutes": {
+      "text": "Can you do it for just 10 minutes?",
+      "evidence": {"claim": "none", "principle": "weak_moderate", "refs": ["B5"], "pop_science_flag": "moderate",
+        "note": "No trial of 'just N minutes'. Procrastination treatments help in general. The Zeigarnik-effect rationale is contradicted; the Ovsiankina effect (people resume interrupted tasks) is a better reason."}
+    },
+    "mindfulness_pause": {
+      "text": "Take 5 minutes to sit quietly and consider why. How about now?",
+      "evidence": {"claim": "weak", "principle": "moderate", "refs": ["B7"], "pop_science_flag": "mild",
+        "note": "This is reflective introspection more than mindfulness. Multi-week mindfulness programmes help self-rated ADHD symptoms but not against active controls."}
+    },
+    "music": {
+      "text": "Listen to music or an audiobook",
+      "evidence": {"claim": "weak", "principle": "moderate", "refs": ["C1"], "pop_science_flag": "moderate",
+        "note": "Weak or contradicted for thinking-heavy work. White/pink noise has a small benefit in ADHD."},
+      "bot_tip": "For reading or writing tasks, white or pink noise has better support than music with lyrics or audiobooks."
+    },
+    "accommodate_task": {
+      "text": "Accomodate the task to make it less bad",
+      "evidence": {"claim": "weak", "principle": "moderate", "refs": ["C2"], "pop_science_flag": "mild",
+        "note": "Too vague to test as written. Temptation bundling has field evidence, for exercise."}
+    },
+    "pretend_excited": {
+      "text": "Pretend to be excited about it, find the fun",
+      "evidence": {"claim": "weak", "principle": "moderate", "refs": ["C3"], "pop_science_flag": "moderate",
+        "note": "Anxiety-to-excitement reappraisal was tested before performances, not boring chores."}
+    },
+    "reward_after": {
+      "text": "Decide on a reward for after",
+      "evidence": {"claim": "partly_contradicted", "principle": "moderate", "refs": ["C4"], "pop_science_flag": "mild",
+        "note": "Rewards help, but delayed rewards lose more pull in ADHD."},
+      "bot_tip": "Keep rewards small, frequent and close to the effort rather than one big reward at the end."
+    },
+    "change_scenery": {
+      "text": "Change of scenery",
+      "evidence": {"claim": "none", "principle": "weak_moderate", "refs": ["C5"], "pop_science_flag": "mild",
+        "note": "Nature exposure has low-to-moderate evidence; simply moving rooms is untested."}
+    },
+    "scientist_hat": {
+      "text": "Wear the \"Scientist Hat\"- they do this task!",
+      "evidence": {"claim": "weak", "principle": "weak", "refs": ["C6"], "pop_science_flag": "none",
+        "note": "Closest evidence is the unreplicated 'Batman effect' study in young children."}
+    },
+    "body_double": {
+      "text": "Body double with a friend",
+      "evidence": {"claim": "none", "principle": "weak", "refs": ["C7"], "pop_science_flag": "strong",
+        "note": "Popular and low-risk, but no controlled studies. Social facilitation suggests it suits simple tasks better than complex ones."}
+    },
+    "needs_check": {
+      "text": "Are your physical & emotional needs met right now?",
+      "evidence": {"claim": "moderate_strong", "principle": "strong", "refs": ["D1", "A4"], "pop_science_flag": "mild",
+        "note": "Varies by item: meds and sleep strong; movement moderate; water moderate (small); emotion-avoidance moderate (correlational); sensory emerging; food as willpower fuel contradicted."}
+    },
+    "dbt_skills": {
+      "text": "Use DBT skills- fit the facts, opposite action, loving kindness.",
+      "evidence": {"claim": "weak", "principle": "moderate", "refs": ["D2"], "pop_science_flag": "moderate",
+        "note": "The DBT skill is called 'check the facts'. Evidence is for multi-week therapist-led DBT-based groups; one large trial was null."}
+    },
+    "attend_need": {
+      "text": "Attend to the need.",
+      "evidence": {"claim": "varies", "principle": "varies", "refs": ["D3", "D1"], "pop_science_flag": "none",
+        "note": "Logic is sound; no study tests 'attend to the need, then retry' as a sequence."}
+    },
+    "create_interruptions": {
+      "text": "Create interruptions: drinking lots of water, content blockers, etc",
+      "evidence": {"claim": "none", "principle": "weak", "refs": ["F1", "F2"], "pop_science_flag": "moderate",
+        "note": "Content blockers have moderate general-population evidence (F2); water/bladder interruptions are untested (F1)."}
+    },
+    "stop_five_minutes": {
+      "text": "Stop what you're doing for just 5 minutes",
+      "evidence": {"claim": "not_reviewed", "principle": "weak", "refs": ["E4"], "pop_science_flag": "none",
+        "note": "Not separately rated. Nearest evidence: micro-breaks modestly improve vigour (E4)."}
+    },
+    "drink_water_pee": {
+      "text": "Drink water so you get up to pee",
+      "evidence": {"claim": "none", "principle": "weak", "refs": ["F1"], "pop_science_flag": "moderate",
+        "note": "Untested."},
+      "safety": "Drinking lots of water is not appropriate for people on fluid restrictions (e.g. some heart or kidney conditions)."
+    },
+    "content_blocker": {
+      "text": "Put on content blocker",
+      "evidence": {"claim": "moderate", "principle": "moderate", "refs": ["F2"], "pop_science_flag": "mild",
+        "note": "Moderate in the general population; none in ADHD."}
+    },
+    "uncomfortable_position": {
+      "text": "Get into an uncomfortable position so you're more likely to get up",
+      "evidence": {"claim": "none", "principle": "weak", "refs": ["F1"], "pop_science_flag": "moderate",
+        "note": "Untested."}
+    },
+    "recurring_alarm": {
+      "text": "Set a recurring alarm to check in: do you want to be doing this?",
+      "evidence": {"claim": "weak_moderate", "principle": "moderate", "refs": ["F3"], "pop_science_flag": "none",
+        "note": "Rests on self-monitoring research. Too many alarms can raise stress."}
+    },
+    "ask_help_interrupt": {
+      "text": "Ask for help to interrupt task",
+      "evidence": {"claim": "weak", "principle": "moderate", "refs": ["F4"], "pop_science_flag": "mild",
+        "note": "Accountability and progress reporting have moderate general support; weak in ADHD."}
+    },
+    "accountability_from_others": {
+      "text": "Set up accountability from others",
+      "evidence": {"claim": "weak", "principle": "moderate", "refs": ["F4"], "pop_science_flag": "mild",
+        "note": "Ariely & Wertenbroch (2002) was retracted in 2026 and should not be cited as support."}
+    },
+    "grumbling": {
+      "text": "Make grumbling noises about it",
+      "evidence": {"claim": "none", "principle": "weak", "refs": ["F5"], "pop_science_flag": "none",
+        "note": "Nearest research is on swearing and pain tolerance/strength."}
+    },
+    "teach_paralysis": {
+      "text": "Pretend you're teaching someone ADHD skills & verbally explain how you overcome paralysis",
+      "evidence": {"claim": "none", "principle": "moderate", "refs": ["F6"], "pop_science_flag": "mild",
+        "note": "Learning-by-teaching improves understanding; untested for starting tasks."}
+    },
+    "harmless_problem": {
+      "text": "Create a harmless but immediate problem (toss phone across room, knock over water)",
+      "evidence": {"claim": "none", "principle": "weak", "refs": ["F1"], "pop_science_flag": "moderate",
+        "note": "Untested personal hack."},
+      "safety": "Knocking over water near electronics or floors and throwing a phone carry real risks (electrical hazards, damage, falls, injury).",
+      "bot_tip": "Safer version with the same logic: put a timer or alarm across the room so you have to get up to stop it."
+    },
+    "dance_break": {
+      "text": "Dance break with fun song",
+      "evidence": {"claim": "none", "principle": "strong", "refs": ["E1", "A3"], "pop_science_flag": "moderate",
+        "note": "Loved music does release dopamine, but nothing links that to starting a task. Any benefit is mood, arousal and light movement."}
+    },
+    "snack": {
+      "text": "Delicious snack",
+      "evidence": {"claim": "contradicted", "principle": "contradicted", "refs": ["E2"], "pop_science_flag": "strong",
+        "note": "Snacks/sugar do not boost willpower. Eating when actually hungry is still sensible (D1)."}
+    },
+    "jumping_jacks": {
+      "text": "Exercise: 60s jumping jacks",
+      "evidence": {"claim": "weak", "principle": "moderate", "refs": ["E3"], "pop_science_flag": "moderate",
+        "note": "Acute exercise gives small short-term executive-function benefits, but studied doses are 10-30 minutes, not 60 seconds."}
+    },
+    "stretch": {
+      "text": "Stretch",
+      "evidence": {"claim": "none", "principle": "weak", "refs": ["E4"], "pop_science_flag": "mild",
+        "note": "Harmless; micro-breaks modestly improve vigour."}
+    },
+    "novelty": {
+      "text": "Novelty (position, environs)",
+      "evidence": {"claim": "none", "principle": "strong", "refs": ["E5"], "pop_science_flag": "moderate",
+        "note": "Novelty activates dopamine areas, but responses fade fast with repetition; untested for starting tasks."}
+    },
+    "name_emotion": {
+      "text": "Name the emotion, impulse, and need. \"I'm feeling grumpy, so I want to give up. I need to have a snack and take a break.\"",
+      "evidence": {"claim": "weak", "principle": "moderate", "refs": ["G1"], "pop_science_flag": "moderate",
+        "note": "Affect labelling reduces emotional reactivity in the lab; the 'and need' part is untested."}
+    },
+    "physical_distance": {
+      "text": "Create physical distance from the thing",
+      "evidence": {"claim": "moderate", "principle": "moderate", "refs": ["G2"], "pop_science_flag": "mild",
+        "note": "Situational self-control beats in-the-moment willpower; the phone 'brain drain' finding is contested."}
+    },
+    "create_gap": {
+      "text": "Create a gap. Wait just 5 minutes before acting.",
+      "evidence": {"claim": "none", "principle": "weak", "refs": ["G3"], "pop_science_flag": "mild",
+        "note": "No verified evidence that cravings pass in a set number of minutes."}
+    },
+    "look_back": {
+      "text": "Look back: During those 5 minutes, think about the last time you acted on this impulse. (\"Last time I ___, I felt ___ / ____ happened\")",
+      "evidence": {"claim": "none", "principle": "none", "refs": ["G4"], "pop_science_flag": "mild",
+        "note": "Untested; one non-peer-reviewed thesis found imagining past events did not reduce impulsive choice."}
+    },
+    "look_forward": {
+      "text": "Look forward : \"How will I feel if I follow X impulse?\" Answer that question for yourself, as well as \"How will I feel if I don't follow X impulse?\" (let there be good feelings about that one too!)",
+      "evidence": {"claim": "moderate", "principle": "moderate", "refs": ["G4"], "pop_science_flag": "mild",
+        "note": "Episodic future thinking reduces impulsive choice in lab studies (non-ADHD). Predicted feelings are usually overestimated."}
+    },
+    "find_an_out": {
+      "text": "Find an out: add a natural stopping point- drink lots of water so you need to get up to pee, or set a content blocker to start in 15 minutes.",
+      "evidence": {"claim": "moderate", "principle": "moderate", "refs": ["G5"], "pop_science_flag": "none",
+        "note": "If-then stopping plans helped children with ADHD in lab tasks; untested in adults or real-world settings."},
+      "safety": "Drinking lots of water is not appropriate for people on fluid restrictions."
+    },
+    "plan_interruption": {
+      "text": "Plan an interruption or ask a friend for help interrupting.",
+      "evidence": {"claim": "moderate", "principle": "moderate", "refs": ["G5", "F4"], "pop_science_flag": "none",
+        "note": "Same if-then planning evidence as 'Find an out'."}
+    },
+    "make_harder": {
+      "text": "Make it harder to follow impulse- delete apps, hide things, etc.",
+      "evidence": {"claim": "moderate", "principle": "moderate", "refs": ["G6"], "pop_science_flag": "none",
+        "note": "Moderate in the general population; none in ADHD."}
+    },
+    "accountability_with_others": {
+      "text": "Set up accountability with others",
+      "evidence": {"claim": "weak", "principle": "moderate", "refs": ["F4"], "pop_science_flag": "mild",
+        "note": "See 'Set up accountability from others'."}
+    },
+    "follow_dopamine": {
+      "text": "Follow the dopamine and replace it with something shorter/more contained- rather than play the game, do the task but get a snack from the vending machine after.",
+      "evidence": {"claim": "none", "principle": "weak", "refs": ["G7", "A3"], "pop_science_flag": "strong",
+        "note": "Reasonable as reward substitution, but you cannot perceive or 'follow' dopamine. Keep the reward close to the effort."}
+    },
+    "teach_impulses": {
+      "text": "Pretend you're teaching someone ADHD skills & verbally explain how you resist impulses",
+      "evidence": {"claim": "none", "principle": "moderate", "refs": ["F6"], "pop_science_flag": "mild",
+        "note": "Learning-by-teaching improves understanding; untested for impulse control."}
+    },
+    "willfulness_worksheet": {
+      "text": "Do DBT worksheet on willfulness.",
+      "evidence": {"claim": "none", "principle": "none", "refs": ["G8"], "pop_science_flag": "mild",
+        "note": "Clinical concept from Linehan's DBT manuals; no validated measure or study."}
+    },
+    "honesty_check": {
+      "text": "Did you actually follow/try the suggestions on the flowchart?",
+      "evidence": {"claim": "not_testable", "principle": "moderate", "refs": ["H1", "F3"], "pop_science_flag": "none",
+        "note": "An application of self-monitoring; no direct evidence."}
+    },
+    "reschedule": {
+      "text": "Set another day/time to complete the task",
+      "evidence": {"claim": "none", "principle": "moderate", "refs": ["H2"], "pop_science_flag": "mild",
+        "note": "A vague 'another day' is functionally procrastination; a specific when/where/how plan has medium-to-large effects."},
+      "bot_tip": "Make it a concrete if-then plan, e.g. 'At 10:00 tomorrow, at my desk, I will open the file and write the heading.'"
+    },
+    "delegate": {
+      "text": "Ask for help!",
+      "evidence": {"claim": "none", "principle": "none", "refs": ["H3"], "pop_science_flag": "none",
+        "note": "Common-sense practical advice; untested rather than disproven."}
+    },
+    "half_ass": {
+      "text": "Half-ass it. Something is better than nothing!",
+      "evidence": {"claim": "weak", "principle": "moderate", "refs": ["H4"], "pop_science_flag": "mild",
+        "note": "Fits CBT-for-perfectionism principles; the chart sensibly limits it to tasks where quality isn't critical."}
+    },
+    "radical_acceptance": {
+      "text": "Practice radical acceptance. This task may not get done right now. It might feel like a catastrophe, but it'll be okay.",
+      "evidence": {"claim": "weak", "principle": "moderate", "refs": ["H5"], "pop_science_flag": "none",
+        "note": "ACT has moderate evidence generally; radical acceptance specifically has two lab studies. Accepting reality, not giving up."}
+    },
+    "distress_tolerance": {
+      "text": "Do the task. Use distress tolerance skills and harm reduction tools to minimize its impact on you.",
+      "evidence": {"claim": "weak", "principle": "moderate", "refs": ["H6"], "pop_science_flag": "mild",
+        "note": "Distress tolerance is a real, changeable construct; 'harm reduction' is a loose metaphor here."}
+    }
+  },
+  "nodes": {
+    "step1": {
+      "type": "question", "step": 1, "page": 1, "flow": "triage",
+      "text": "Do you know what you need to do?",
+      "options": [
+        {"label": "Yes!", "to": "step2"},
+        {"label": "OVERWHELM: Kind of, but I'm not sure where to start", "to": "prioritize"},
+        {"label": "OVERWHELM: No idea :(", "to": "prioritize"}
+      ]
+    },
+    "step2": {
+      "type": "question", "step": 2, "page": 1, "flow": "triage",
+      "text": "Can you start the task?",
+      "options": [
+        {"label": "Yes!", "to": "hell_yeah"},
+        {"label": "No, that's why I'm using this", "to": "step3"}
+      ]
+    },
+    "step3": {
+      "type": "question", "step": 3, "page": 1, "flow": "triage",
+      "text": "Why are you having trouble getting started?",
+      "options": [
+        {"label": "INERTIA: I want to do it but I can't stop doing something else", "to": "interrupt_inertia", "via": "see pg 2 / cont'd from page 1"},
+        {"label": "IMPULSE CONTROL: I really want to do something else specifically", "to": "resist_impulses", "via": "see pg 2 / cont'd from page 1"},
+        {"label": "MOTIVATION: I don't want to do it", "to": "ten_minutes"},
+        {"label": "??? Not sure why", "to": "mindfulness"},
+        {"label": "SENSORY & EMOTIONAL REGULATION: I feel bad, upset, gross", "to": "wellbeing"},
+        {"label": "PERFECTIONISM: It feels too hard or I'm afraid of failing", "to": "break_it_down", "line": "dotted"},
+        {"label": "PARALYSIS: I don't know how to do it", "to": "break_it_down", "line": "dotted"}
+      ]
+    },
+    "ten_minutes": {
+      "type": "question", "page": 1, "flow": "make-it-tolerable",
+      "text": "Can you do it for just 10 minutes?",
+      "strategies": ["ten_minutes"],
+      "options": [
+        {"label": "Yeah, that sounds doable", "to": "hell_yeah"},
+        {"label": "That still sounds bad", "to": "why_bad"}
+      ]
+    },
+    "why_bad": {
+      "type": "question", "page": 1, "flow": "make-it-tolerable",
+      "text": "Why?",
+      "options": [
+        {"label": "It's an unpleasant or arduous task", "to": "make_tolerable", "confidence": "most_likely"},
+        {"label": "I'm worried I'll fail.", "to": "go_step4", "confidence": "most_likely"}
+      ]
+    },
+    "prioritize": {
+      "type": "strategy", "page": 1, "flow": "break-it-down",
+      "title": "PRIORITIZE",
+      "strategies": ["prioritize_matrix", "prioritize_top3"],
+      "options": [
+        {"label": "I know what to do now!", "to": "great_job_step2", "confidence": "most_likely"},
+        {"label": "OVERWHELM: I still don't know...", "to": "break_it_down"}
+      ]
+    },
+    "break_it_down": {
+      "type": "strategy", "page": 1, "flow": "break-it-down",
+      "title": "BREAK IT DOWN",
+      "strategies": ["goblin_tools", "smallest_step"],
+      "options": [
+        {"label": "I know what to do now!", "to": "great_job_step2"},
+        {"label": "I still don't know :(", "to": "revisit_step1"},
+        {"label": "It still feels too hard or like too much", "to": "wellbeing", "line": "dotted"}
+      ]
+    },
+    "great_job_step2": {
+      "type": "redirect", "page": 1,
+      "text": "Great job! Move to step 2.",
+      "next": "step2"
+    },
+    "revisit_step1": {
+      "type": "redirect", "page": 1,
+      "text": "Revisit previous to-do lists, ask for help, or take a walk break to think about it. Go to Step 1.",
+      "next": "step1"
+    },
+    "mindfulness": {
+      "type": "strategy", "page": 1, "flow": "wellbeing-check",
+      "title": "MINDFULNESS",
+      "strategies": ["mindfulness_pause"],
+      "options": [
+        {"label": "I know why now!", "to": "great_job_step3"},
+        {"label": "I still don't know...", "to": "wellbeing"}
+      ]
+    },
+    "great_job_step3": {
+      "type": "redirect", "page": 1,
+      "text": "Great job! Go to Step 3.",
+      "next": "step3"
+    },
+    "make_tolerable": {
+      "type": "strategy", "page": 1, "flow": "make-it-tolerable",
+      "title": "MAKE IT MORE TOLERABLE",
+      "strategies": ["music", "accommodate_task", "pretend_excited", "reward_after", "change_scenery", "scientist_hat", "body_double"],
+      "options": [
+        {"label": "One of those worked!", "to": "hell_yeah"},
+        {"label": "This didn't help", "to": "diy_dopamine", "via": "see pg 2 / Making it tolerable didn't help (cont'd from page 1)"}
+      ]
+    },
+    "wellbeing": {
+      "type": "question", "page": 1, "flow": "wellbeing-check",
+      "title": "WELLBEING",
+      "text": "Are your physical & emotional needs met right now?",
+      "strategies": ["needs_check"],
+      "options": [
+        {"label": "Needs are met!", "to": "step4", "via": "see pg 2 / Needs are met! (cont'd from page 1)"},
+        {"label": "No, I need something. It's... EMOTIONAL: social interaction, managing shame, fear, anxiety, etc", "to": "need_emotional"},
+        {"label": "No, I need something. It's... PHYSICAL: meds, food, rest sensory, water, movement, etc", "to": "need_physical"}
+      ]
+    },
+    "need_emotional": {
+      "type": "question", "page": 1, "flow": "wellbeing-check",
+      "text": "Can the need be met right now, even partially?",
+      "options": [
+        {"label": "Yes!", "to": "dbt_skills"},
+        {"label": "Need can't be met", "to": "step4", "via": "see page 2 / Need can't be met (cont'd from page 1)"}
+      ]
+    },
+    "need_physical": {
+      "type": "question", "page": 1, "flow": "wellbeing-check",
+      "text": "Can the need be met right now, even partially?",
+      "options": [
+        {"label": "Yes!", "to": "attend_need"},
+        {"label": "Need can't be met", "to": "step4", "via": "see page 2 / Need can't be met (cont'd from page 1)"}
+      ]
+    },
+    "dbt_skills": {
+      "type": "redirect", "page": 1, "flow": "wellbeing-check",
+      "text": "Use DBT skills- fit the facts, opposite action, loving kindness. Go to Step 2.",
+      "strategies": ["dbt_skills"],
+      "next": "step2"
+    },
+    "attend_need": {
+      "type": "redirect", "page": 1, "flow": "wellbeing-check",
+      "text": "Attend to the need. Go to Step 2",
+      "strategies": ["attend_need"],
+      "next": "step2"
+    },
+    "interrupt_inertia": {
+      "type": "strategy", "page": 2, "flow": "interrupt-inertia",
+      "title": "INTERRUPT INERTIA",
+      "strategies": ["create_interruptions", "stop_five_minutes", "drink_water_pee", "content_blocker", "uncomfortable_position", "recurring_alarm", "ask_help_interrupt", "accountability_from_others", "grumbling", "teach_paralysis"],
+      "options": [
+        {"label": "I got unstuck from the task, but still need help starting.", "to": "diy_dopamine"},
+        {"label": "I can start the task now!", "to": "hell_yeah", "confidence": "most_likely"},
+        {"label": "These didn't help", "to": "harmless_problem"}
+      ]
+    },
+    "harmless_problem": {
+      "type": "redirect", "page": 2, "flow": "interrupt-inertia",
+      "text": "Create a harmless but immediate problem (toss phone across room, knock over water) Go to step 4.",
+      "strategies": ["harmless_problem"],
+      "next": "step4"
+    },
+    "diy_dopamine": {
+      "type": "strategy", "page": 2, "flow": "make-it-tolerable",
+      "title": "DIY DOPAMINE",
+      "strategies": ["dance_break", "snack", "jumping_jacks", "stretch", "novelty"],
+      "options": [
+        {"label": "I can start the task now!", "to": "hell_yeah"},
+        {"label": "It isn't helping", "to": "step4"}
+      ]
+    },
+    "resist_impulses": {
+      "type": "strategy", "page": 2, "flow": "resist-impulses",
+      "title": "RESIST IMPULSES",
+      "strategies": ["name_emotion", "physical_distance", "create_gap", "look_back", "look_forward", "find_an_out", "plan_interruption", "make_harder", "recurring_alarm", "accountability_with_others", "follow_dopamine", "teach_impulses"],
+      "options": [
+        {"label": "One of those worked!", "to": "hell_yeah"},
+        {"label": "I'm sort of resisting the impulse, but not starting the task.", "to": "interrupt_inertia", "confidence": "most_likely"},
+        {"label": "I still can't resist, I really really want to do the thing", "to": "comic_go_step4", "confidence": "most_likely"}
+      ]
+    },
+    "comic_go_step4": {
+      "type": "question", "page": 2, "flow": "resist-impulses",
+      "text": "Go to Step 4.",
+      "options": [
+        {"label": "OK, going to Step 4.", "to": "step4", "interpretive": true},
+        {"label": "I don't want to, I really want to do this thing instead and I don't want to bother with skills.", "to": "comic_willfulness"}
+      ]
+    },
+    "comic_willfulness": {
+      "type": "question", "page": 2, "flow": "resist-impulses",
+      "text": "Do DBT worksheet on willfulness. Go to Step 4.",
+      "strategies": ["willfulness_worksheet"],
+      "options": [
+        {"label": "OK, going to Step 4.", "to": "step4", "interpretive": true},
+        {"label": "I don't want to!!", "to": "comic_please"}
+      ]
+    },
+    "comic_please": {
+      "type": "question", "page": 2, "flow": "resist-impulses",
+      "text": "Please go to Step 4?",
+      "options": [
+        {"label": "OK, going to Step 4.", "to": "step4", "interpretive": true},
+        {"label": "No!!!", "to": "comic_fine"}
+      ]
+    },
+    "comic_fine": {
+      "type": "redirect", "page": 2, "flow": "resist-impulses",
+      "text": "Fine.",
+      "next": "radical_acceptance"
+    },
+    "go_step4": {
+      "type": "redirect", "page": 1,
+      "text": "Go to Step 4.",
+      "next": "step4"
+    },
+    "step4": {
+      "type": "question", "step": 4, "page": 2, "flow": "extension-or-delegate",
+      "text": "Are there other reasons you can't start the task?",
+      "options": [
+        {"label": "Yes", "to": "go_again"},
+        {"label": "Nope", "to": "step4_tried"}
+      ]
+    },
+    "step4_tried": {
+      "type": "question", "page": 2, "flow": "extension-or-delegate",
+      "text": "Did you actually follow/try the suggestions on the flowchart?",
+      "strategies": ["honesty_check"],
+      "options": [
+        {"label": "I may have skipped some", "to": "go_again", "confidence": "most_likely"},
+        {"label": "I did, I promise!", "to": "step5"}
+      ]
+    },
+    "go_again": {
+      "type": "redirect", "page": 2,
+      "text": "Go through the flowchart again to solve them first",
+      "next": "step1",
+      "next_interpretive": true
+    },
+    "step5": {
+      "type": "question", "step": 5, "page": 2, "flow": "extension-or-delegate",
+      "text": "Do you need to complete the task right now? Can you get an extension or make more time?",
+      "options": [
+        {"label": "It can wait", "to": "reschedule"},
+        {"label": "No flexibility", "to": "delegate_q"}
+      ]
+    },
+    "delegate_q": {
+      "type": "question", "page": 2, "flow": "extension-or-delegate",
+      "text": "Can the task be delegated? Can someone else help you?",
+      "options": [
+        {"label": "Yes!", "to": "ask_for_help"},
+        {"label": "Nope", "to": "partial_q"}
+      ]
+    },
+    "partial_q": {
+      "type": "question", "page": 2, "flow": "extension-or-delegate",
+      "text": "Can you do the task partially or badly?",
+      "options": [
+        {"label": "Yes!", "to": "half_ass"},
+        {"label": "No, it's high-stakes", "to": "worth_q"}
+      ]
+    },
+    "worth_q": {
+      "type": "question", "page": 2, "flow": "extension-or-delegate",
+      "text": "Is it really worth pushing yourself to do it anyway?",
+      "options": [
+        {"label": "Not worth suffering for", "to": "radical_acceptance"},
+        {"label": "It's worth it", "to": "push_through"}
+      ]
+    },
+    "hell_yeah": {
+      "type": "terminal", "outcome": "start",
+      "text": "Hell yeah, get started!"
+    },
+    "reschedule": {
+      "type": "terminal", "outcome": "reschedule", "page": 2, "flow": "extension-or-delegate",
+      "text": "Set another day/time to complete the task",
+      "strategies": ["reschedule"]
+    },
+    "ask_for_help": {
+      "type": "terminal", "outcome": "delegate", "page": 2, "flow": "extension-or-delegate",
+      "text": "Ask for help!",
+      "strategies": ["delegate"]
+    },
+    "half_ass": {
+      "type": "terminal", "outcome": "partial", "page": 2, "flow": "extension-or-delegate",
+      "text": "Half-ass it. Something is better than nothing!",
+      "strategies": ["half_ass"]
+    },
+    "radical_acceptance": {
+      "type": "terminal", "outcome": "accept", "page": 2, "flow": "extension-or-delegate",
+      "text": "Practice radical acceptance. This task may not get done right now. It might feel like a catastrophe, but it'll be okay.",
+      "strategies": ["radical_acceptance"]
+    },
+    "push_through": {
+      "type": "terminal", "outcome": "push_through", "page": 2, "flow": "extension-or-delegate",
+      "text": "Do the task. Use distress tolerance skills and harm reduction tools to minimize its impact on you.",
+      "strategies": ["distress_tolerance"]
+    }
+  }
+}

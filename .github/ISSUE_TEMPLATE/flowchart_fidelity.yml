@@ -1,0 +1,33 @@
+name: Flowchart fidelity
+description: A box, label or arrow in data/flowchart.json or the bot drafts doesn't match source/chart.png.
+labels: [fidelity]
+body:
+  - type: input
+    id: node
+    attributes:
+      label: Node id(s)
+      description: From `python -m get_unstuck list`
+      placeholder: "resist_impulses"
+    validations:
+      required: true
+  - type: textarea
+    id: chart
+    attributes:
+      label: What the chart shows
+      description: Quote the chart text exactly. Describe where the arrow starts and ends.
+    validations:
+      required: true
+  - type: textarea
+    id: repo
+    attributes:
+      label: What the repo has
+    validations:
+      required: true
+  - type: dropdown
+    id: certainty
+    attributes:
+      label: How sure are you?
+      options:
+        - Clearly visible in the image
+        - Most likely, but the junction is crowded
+        - Unsure
