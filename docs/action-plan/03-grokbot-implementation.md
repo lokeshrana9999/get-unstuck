@@ -90,7 +90,7 @@ Owners: **Bot** is AI agent work in the repo. **Lokesh** is work in the Grok Bot
 
 **I-07 Routines, off by default** (Lokesh)
 - R1 is added only when the user asks for it.
-- R2 and R3 are one-off routines, created after the user says "yes".
+- R2 (start nudge) is a recurring time slot and R3 (mid-day check-in) is recurring and off by default. Each is created only after a preview and a "yes". *(Updated for the pivot: see `bot/routines.md`.)*
 - R4 and R5 are added only after I-08.
 - **Accept when:** a fresh Bot or template has no active routines.
 

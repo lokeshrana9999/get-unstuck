@@ -4,9 +4,56 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Pivot: ADHD productivity bot (2026-10-31, `docs/PIVOT.md`)
+
+The bot changes from a "get unstuck when stuck" helper to a productivity companion. It onboards goals and reminder preferences, sends proactive nudges through Grok Bot routines, and uses the flowchart as the in-the-moment engine when a check-in finds someone stuck. Nothing was renamed, and no bot was created.
+
+#### Added
+- `docs/research-adhd-productivity.md`: research on reminders and prompting, if-then plans in ADHD, accountability and body doubling, time-blindness aids, notification fatigue and habituation, just-in-time adaptive interventions (JITAIs), and ADHD coaching and digital trials. It also covers app retention, the ADHD app landscape and pitfalls (Tiimo, Inflow, Goblin Tools, Structured, Focusmate, Llama Life, Routinery, Finch, Habitica), and what Grok Bot's scheduling docs confirm or leave unknown. Sources are linked, with evidence levels, weak or contested flags and unverified items marked.
+- `bot/skills/onboarding/SKILL.md`:
+  - 3 core questions;
+  - a first if-then plan;
+  - a preview of each routine and an explicit yes for each;
+  - quiet hours and timezone;
+  - opt-in memory (the Sheet is deferred);
+  - re-onboarding after a gap with no guilt;
+  - evidence notes with honesty tags.
+- `docs/naming.md`: an assessment of the current name and 3 descriptive options. No rename was made; the decision is Lokesh's.
+- `tests/test_pivot_drafts.py`: document checks that the drafts keep the agreed rules. They cover the routines sections, cap, quiet hours and snooze limit, guardrails §8, the onboarding flow and setup prompt, the Sheet tabs, the naming options, the research doc's sources and flags, and the absence of banned or guilt words in example lines. Enforcing the cap and quiet hours is still open.
+
+#### Changed
+- `bot/persona.md`: now productivity-focused. It adds proactive-nudge, stuck check-in and end-of-day examples, and the setup prompt runs onboarding first and encodes the nudge rules. The name is unchanged.
+- `bot/routines.md`, rewritten:
+  - platform facts and unknowns;
+  - Cadence: at most 3 proactive contacts a day by default, 0–5 allowed, 5 as a hard ceiling;
+  - Quiet hours: 21:00–08:00 by default, built into the schedules because the platform has no do-not-disturb;
+  - Snooze: at most 2 per nudge;
+  - Escalation limits: no escalation; ignored nudges are never followed up; after 3 ignored nudges of one type, that type is paused; after 7 days of silence, everything is paused;
+  - Opt-out: acts immediately;
+  - a catalogue of routines R1–R8, a daily load budget, a nudge state machine, and a list of what the design does NOT do.
+- `docs/sheet-design.md`: rewritten with Goals, Tasks, Check-ins, Sessions, Wins, Settings and Summary tabs, plus "Streaks without shame" (counts only go up), batched logging behind a preview and a yes, privacy rules and untested formula drafts.
+- `bot/guardrails.md`: new §8 Proactive messaging. It covers consent per routine, the cap and quiet hours, no escalation, snooze and ignore rules, opt-out, usage cost, forbidden guilt patterns, and crisis screening of replies to nudges. It also covers rest over productivity, accountability partners (drafts only), not implying human presence in body-doubling sessions, app data treated as data, minors, dependence and retention ethics. Requested follow-ups (snoozes, session messages) have their own limits and don't count toward the daily cap, consistent with `routines.md`.
+- `bot/skills/triage/SKILL.md`: "Entry from a check-in" section. A [stuck] reply starts at Step ② with the task already known.
+- `docs/ACTION-PLAN.md`, revised for the pivot:
+  - Phase 0 pivot items;
+  - decisions D-11 to D-17 (name, cadence, body doubling, calendar, store, usage-cost wording, beta thresholds);
+  - repo tasks P-01 to P-10;
+  - a platform spike first, with a decision table;
+  - drop-off-aware beta metrics;
+  - pivot conditions in the go/no-go gate;
+  - new risks.
+- README: describes the productivity bot ("How it works", "What the evidence says", name under review). `docs/PLAN.md` gets a pivot note marking which milestones no longer apply as they were written.
+- Consistency fixes:
+  - one entry step for [stuck] (Step ②);
+  - the guardrails crisis-recheck pointer now points to S-01;
+  - the part-03 routine description updated (R2 is a recurring slot);
+  - Sheet tone values aligned with onboarding.
+
+### Response to the verdict
+
 Response to the independent verdict (`docs/verdict.md`). The bot is now an explicit *adaptation* of the chart, not a port.
 
-### Added
+#### Added
 - `docs/verdict-response.md`: where we agree or disagree with the verdict, and what it changes.
 - `docs/ACTION-PLAN.md`: a phased plan with owners (Bot or Lokesh), acceptance criteria, a go/no-go gate and consolidated risks. It was merged from four parallel planning parts in `docs/action-plan/`: content and evidence, safety and guardrails, Grok Bot implementation, and testing and launch.
 - **A bot adaptation layer in `data/flowchart.json` (v0.2.0)** and the schema:
@@ -24,7 +71,7 @@ Response to the independent verdict (`docs/verdict.md`). The bot is now an expli
   - the reroutes, the one-round comic exchange, the loop cap, tip ordering and bot-mode reachability.
 - `Flowchart.validate()` now also checks overlay presence, honesty tags, bot reroute targets, and that bot mode never traps the user in a loop.
 
-### Changed
+#### Changed
 - Overlays apply the verdict's §4a drops and §4b rewords:
   - **Dropped:** snack, "look back", the willfulness worksheet.
   - **Replaced:** the throw-your-phone / spill-water hack becomes a timer across the room; Goblin Tools becomes "let's break it down together".

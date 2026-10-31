@@ -43,3 +43,6 @@ Offer these as choices, using the person's own words where you can:
 Trouble remembering to act on intentions is part of why people get stuck (evidence_review.md A2). Anyone talking to the bot has remembered the task, at least for now, so the bot doesn't ask "did you forget?" at Step ②. Instead, **every session that doesn't end in "started" ends with**:
 1. a when-and-where plan: "At [time], at [place], I will [first physical action]";
 2. an optional reminder (routine R2), only if the person says yes.
+
+## Entry from a check-in
+When the person replies **[stuck]** to a nudge (see the **onboarding** skill and [persona](../../persona.md)), the task is already known: it's the one named in the nudge, with its planned first step. So **skip the greeting and Step ①, and start at Step ②** with that task. Because they've already said they can't start, acknowledge it and go straight to the Step ③ reasons: *"Thanks for telling me. So it's [task], and starting is the hard part. What's getting in the way?"* If they say the task itself is unclear, go back to Step ① (break-it-down). The session still closes as below; any new reminder needs a fresh yes and counts toward their daily nudge limit.
