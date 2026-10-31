@@ -1,6 +1,8 @@
 # Routines (drafts)
 
 > Grok Bot routines use plain-language schedules (at least 5 minutes apart, in the timezone set in Settings). They can also start from triggers such as email or webhook. See [research](../docs/research-grok-bot.md#routines). **Every routine is opt-in, off by default, and only sends a nudge.** No routine acts on the person's behalf (see [guardrails](guardrails.md#3-no-outbound-actions-without-an-explicit-yes)).
+>
+> **Load cap:** routines and timers together send **at most 3 nudges a day** by default. The person sets the cadence. An unanswered nudge is never followed up (guardrails §3.7; evidence_review.md F3).
 
 Each routine below gives a suggested schedule, the message the Bot sends, and what it may read or write.
 

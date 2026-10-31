@@ -9,6 +9,10 @@ from typing import Any, Dict, List, Optional
 
 NODE_TYPES = {"question", "strategy", "redirect", "terminal"}
 CONTINUE_LABEL = "OK, continue"
+# Bot mode leads with the best-supported tips (verdict §4e.2).
+HONESTY_ORDER = ["well_supported", "reasonable_untested", "hack", "not_supported"]
+# A strategy may only be tagged well_supported if its own claim is at least moderate.
+WELL_SUPPORTED_CLAIMS = {"strong", "moderate_strong", "moderate"}
 
 
 def default_data_path() -> Path:
@@ -31,28 +35,60 @@ class Flowchart:
     def node(self, node_id: str) -> Dict[str, Any]:
         return self.nodes[node_id]
 
-    def options(self, node_id: str) -> List[Dict[str, Any]]:
-        """Choices for a node. Redirects get one synthetic 'continue' option."""
+    def options(self, node_id: str, bot: bool = False) -> List[Dict[str, Any]]:
+        """Choices for a node. Redirects get one synthetic 'continue' option.
+
+        In bot mode, option labels and targets use the bot overlay
+        (bot_label / bot_to) where present.
+        """
         node = self.nodes[node_id]
         if node["type"] == "redirect":
             return [{"label": CONTINUE_LABEL, "to": node["next"], "interpretive": True}]
-        return list(node.get("options", []))
+        opts = [dict(opt) for opt in node.get("options", [])]
+        if bot:
+            for opt in opts:
+                opt["label"] = opt.get("bot_label", opt["label"])
+                opt["to"] = opt.get("bot_to", opt["to"])
+        return opts
 
-    def targets(self, node_id: str) -> List[str]:
-        return [opt["to"] for opt in self.options(node_id)]
+    def targets(self, node_id: str, bot: bool = False) -> List[str]:
+        targets = [opt["to"] for opt in self.options(node_id, bot)]
+        if bot and "bot_repeat_next" in self.nodes[node_id]:
+            targets.append(self.nodes[node_id]["bot_repeat_next"])
+        return targets
 
-    def reachable(self, start: Optional[str] = None) -> set:
+    def text(self, node_id: str, bot: bool = False) -> str:
+        node = self.nodes[node_id]
+        return (node.get("bot_text") if bot else None) or node.get("text", "")
+
+    def title(self, node_id: str, bot: bool = False) -> str:
+        node = self.nodes[node_id]
+        return (node.get("bot_title") if bot else None) or node.get("title", "")
+
+    def node_strategies(self, node_id: str, bot: bool = False) -> List[str]:
+        """Strategy ids for a node. Bot mode hides dropped tips and leads with the best supported."""
+        sids = list(self.nodes[node_id].get("strategies", []))
+        if not bot:
+            return sids
+        sids = [s for s in sids if self.strategies[s]["bot"]["action"] != "drop"]
+        return sorted(sids, key=lambda s: HONESTY_ORDER.index(self.strategies[s]["bot"]["honesty"]))
+
+    def strategy_text(self, sid: str, bot: bool = False) -> str:
+        strat = self.strategies[sid]
+        return (strat["bot"].get("text") if bot else None) or strat["text"]
+
+    def reachable(self, start: Optional[str] = None, bot: bool = False) -> set:
         seen, stack = set(), [start or self.start]
         while stack:
             nid = stack.pop()
             if nid in seen or nid not in self.nodes:
                 continue
             seen.add(nid)
-            stack.extend(self.targets(nid))
+            stack.extend(self.targets(nid, bot))
         return seen
 
-    def can_finish(self, node_id: str) -> bool:
-        return any(self.nodes[n]["type"] == "terminal" for n in self.reachable(node_id))
+    def can_finish(self, node_id: str, bot: bool = False) -> bool:
+        return any(self.nodes[n]["type"] == "terminal" for n in self.reachable(node_id, bot))
 
     def validate(self) -> List[str]:
         """Return a list of integrity problems (empty means OK).
@@ -69,6 +105,13 @@ class Flowchart:
             for key in ("claim", "principle"):
                 if ev.get(key) not in levels:
                     errors.append(f"strategy '{sid}': unknown evidence {key} '{ev.get(key)}'")
+            bot = strat.get("bot")
+            if not bot:
+                errors.append(f"strategy '{sid}': missing bot overlay")
+            elif bot.get("honesty") not in HONESTY_ORDER:
+                errors.append(f"strategy '{sid}': unknown honesty tag '{bot.get('honesty')}'")
+            elif bot["honesty"] == "well_supported" and ev.get("claim") not in WELL_SUPPORTED_CLAIMS:
+                errors.append(f"strategy '{sid}': tagged well_supported but claim is '{ev.get('claim')}'")
         used = set()
         for nid, node in self.nodes.items():
             ntype = node.get("type")
@@ -86,7 +129,7 @@ class Flowchart:
                 if sid not in self.strategies:
                     errors.append(f"node '{nid}': unknown strategy '{sid}'")
             if ntype != "terminal":
-                for target in self.targets(nid):
+                for target in set(self.targets(nid)) | set(self.targets(nid, bot=True)):
                     if target not in self.nodes:
                         errors.append(f"node '{nid}': option points to missing node '{target}'")
         if errors:
@@ -96,9 +139,11 @@ class Flowchart:
         reach = self.reachable()
         for nid in sorted(set(self.nodes) - reach):
             errors.append(f"node '{nid}' is unreachable from start")
-        for nid in sorted(reach):
-            if not self.can_finish(nid):
-                errors.append(f"node '{nid}' cannot reach any terminal (trap loop)")
+        for bot in (False, True):
+            mode = "bot mode" if bot else "chart mode"
+            for nid in sorted(self.reachable(bot=bot)):
+                if not self.can_finish(nid, bot):
+                    errors.append(f"node '{nid}' cannot reach any terminal in {mode} (trap loop)")
         return errors
 
 
@@ -108,6 +153,7 @@ class Session:
 
     chart: Flowchart
     current: str = ""
+    bot: bool = False
     history: List[str] = field(default_factory=list)
     visits: Dict[str, int] = field(default_factory=dict)
 
@@ -130,7 +176,15 @@ class Session:
         return self.node["type"] == "terminal"
 
     def options(self) -> List[Dict[str, Any]]:
-        return [] if self.finished else self.chart.options(self.current)
+        if self.finished:
+            return []
+        opts = self.chart.options(self.current, self.bot)
+        repeat_next = self.node.get("bot_repeat_next")
+        # Bot loop cap (verdict §4e.3): on a repeat visit, offer the cap target first.
+        if self.bot and repeat_next and self.visits.get(self.current, 0) >= 2:
+            label = "Let's look at what to do about the task itself (Step 5)"
+            opts = [{"label": label, "to": repeat_next, "interpretive": True}] + opts
+        return opts
 
     def choose(self, index: int) -> str:
         """Pick option by 0-based index; returns the new node id."""

@@ -11,25 +11,24 @@ metadata:
 # Break it down
 
 ## A. PRIORITIZE (used when coming from OVERWHELM at Step ①)
-Chart bullets:
-- Use an important/urgent matrix *(evidence: none for the matrix; the urgency bias it targets is real)*
-- Pick the top 3 things or 1 next thing *(evidence: none for the numbers)*
+Bot wording (from the overlays):
+- Use an important/urgent matrix *(reasonable but untested: the urgency bias it targets is real, but the matrix itself is untested)*
+- Pick the 1 next thing, and say when and where you'll do it. *(reasonable but untested)*
 
-Bot approach: ask for a brain-dump of everything on their mind. Help sort it quickly (urgent? important?). Then ask them to pick **one** next thing.
+Bot approach: ask for a brain-dump of everything on their mind. Help sort it quickly (urgent? important?). Then ask them to pick **one** next thing and attach a time and place to it.
 
 Outcomes:
 - "I know what to do now!" → **"Great job! Move to step 2."** → triage Step ② *(routing marked most likely in review_v2.md)*
 - "OVERWHELM: I still don't know…" → section B.
 
-## B. BREAK IT DOWN (from PRIORITIZE, PERFECTIONISM or PARALYSIS)
-Chart bullets:
-- Use Goblin Tools! *(evidence: none, untested. Mention it as an option and offer to do the breakdown together here instead.)*
-- What's the smallest, easiest, **measurable** first step? *(evidence: moderate, via goal-setting and if-then planning research)*
+## B. BREAK IT DOWN (from PRIORITIZE, TOO HARD / AFRAID I'LL FAIL, PARALYSIS, or "I'm worried I'll fail")
+This is the bot's core job. Breaking a task into a specific first step with a when-and-where plan is the best-supported technique in the evidence review (B3, H2, takeaway 2). The bot does the breakdown itself; the chart's "Use Goblin Tools!" becomes "Let's break it down together right here. (If you like apps, Goblin Tools does this too.)"
 
 Bot approach:
 1. Ask what "done" looks like for the **first** piece, not the whole task.
-2. Shrink it until it takes under 5 minutes and is observable ("open the doc and type the title").
-3. *Bot tip (not chart text):* make it an if-then plan: "When I finish this message, I'll open the doc at my desk."
+2. Shrink it until it takes under 5 minutes and is observable ("open the doc and type the title"). *(well supported)*
+3. **Required output:** an if-then plan, "At [time], at [place], I will [first physical action]." If they're starting now, use "Right now, at [place], I will …".
+4. For "too hard / afraid I'll fail", offer the **good-enough version** early: "What would a rough, 60%-quality version look like?" This is the chart's "Half-ass it", which the bot offers sooner than the chart does (H4, B6).
 
 Outcomes:
 - "I know what to do now!" → **"Great job! Move to step 2."**

@@ -8,11 +8,13 @@
 
 It asks one small question at a time to find out **why** you're stuck. Then it offers a few small things to try. If today isn't the day, it helps you reschedule, ask for help, do a "good enough" version, or let it go kindly.
 
-> **Status: planning.** This repo holds the plan, the data model, draft bot content and a small command-line prototype. **The Grok Bot hasn't been created yet.** See [docs/PLAN.md](docs/PLAN.md).
+> **Status: planning.** This repo holds the plan, the data model, draft bot content and a small command-line prototype. **The Grok Bot hasn't been created yet.** See [docs/ACTION-PLAN.md](docs/ACTION-PLAN.md).
 
-## Based on a community flowchart
+Honestly put, Get Unstuck is **a structured coaching flow built on reasonable principles**. It is not an "evidence-based ADHD tool", and it doesn't assume you have ADHD.
 
-Get Unstuck follows the flowchart **"Getting Started with Executive Dysfunction"** ([`source/chart.png`](source/chart.png)).
+## Adapted from a community flowchart
+
+Get Unstuck is **adapted from** the flowchart **"Getting Started with Executive Dysfunction"** ([`source/chart.png`](source/chart.png)). It keeps the chart's structure and tone. It rewords or drops the tips that the evidence review found misleading or unsafe, for example "DIY dopamine" becomes a "quick reset", the snack tip is dropped, and the throw-your-phone tip is replaced with a timer across the room. `data/flowchart.json` keeps the chart's own text unchanged, and every change sits beside it as a separate "bot overlay", so each departure from the chart is visible. See [docs/verdict.md](docs/verdict.md) and [docs/verdict-response.md](docs/verdict-response.md).
 
 **Original author: unknown.** The chart carries no signature, and web searches haven't found its creator. If you made this chart or know who did, please [open an issue](../../issues/new?template=credit.yml). We'd love to credit you properly and ask your permission.
 
@@ -41,11 +43,14 @@ The prototype walks the flowchart in your terminal. It needs **Python 3.9+** and
 ```bash
 git clone https://github.com/lokeshrana9999/get-unstuck.git
 cd get-unstuck
-python -m get_unstuck              # walk the chart from Step 1
-python -m get_unstuck --evidence   # show evidence levels next to each tip
+python -m get_unstuck              # walk the original chart from Step 1
+python -m get_unstuck --bot        # walk the adapted bot flow (honesty tags, reworded tips)
+python -m get_unstuck --evidence   # show evidence levels (and the bot version) next to each tip
 python -m get_unstuck validate     # check data/flowchart.json integrity
-python -m unittest                 # run the tests
+python3 -m unittest discover -s tests   # run the tests
 ```
+
+The prototype's crisis check is simple keyword matching on typed English phrases. **It is not a safety system.**
 
 In the walker:
 - type a number to choose
@@ -66,12 +71,16 @@ bot/                     Draft Grok Bot content (not yet loaded into the app)
                          resist-impulses, make-it-tolerable, wellbeing-check,
                          extension-or-delegate
 data/
-  flowchart.json         Nodes, branches, strategies and evidence levels
+  flowchart.json         Nodes, branches, strategies, evidence levels, bot overlays
   flowchart.schema.json  JSON Schema (draft 2020-12)
 get_unstuck/             Dependency-free CLI prototype (engine, CLI, safety)
 tests/                   unittest suite (data integrity, fidelity, CLI, drafts)
 docs/
-  PLAN.md                Milestones toward the bot
+  ACTION-PLAN.md         Phased plan to build the bot (owners, gates, risks)
+  action-plan/           The four planning parts it was merged from
+  verdict.md             Independent verdict on the chart and the bot idea
+  verdict-response.md    Where we agree/disagree and what changed
+  PLAN.md                Original milestones (superseded by ACTION-PLAN.md)
   research-grok-bot.md   What Grok Bot and Grok Build can actually do, with sources
   sheet-design.md        Optional Google Sheet log
 source/                  Flowchart image and its reviewed breakdown and evidence check

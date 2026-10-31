@@ -71,7 +71,7 @@ class WalkTests(unittest.TestCase):
         self.assertIn("INTERRUPT INERTIA", out)
         self.assertIn("[evidence:", out)
         self.assertIn("Safety:", out)
-        self.assertIn("Tip (not from the chart)", out)
+        self.assertIn("Bot version (replace, not chart text): Set a timer", out)
 
     def test_invalid_input_and_quit(self):
         code, out = run_walk(["banana", "9", "q"])

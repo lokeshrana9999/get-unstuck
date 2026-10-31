@@ -10,7 +10,10 @@ Thank you for helping! This project is for people who find starting things hard,
 - **Credit.** Help us find the chart's original author.
 
 ## Ground rules
-1. **Don't invent chart content.** Chart text in `flowchart.json` is quoted verbatim, including "Accomodate" [sic]. Additions go in `bot_tip` or options with `"interpretive": true`, and must be labelled as not chart text.
+1. **Don't invent chart content.** Chart text in `flowchart.json` (`text`, `label`, `to`) is quoted verbatim, including "Accomodate" [sic]. The bot's own wording goes in the **bot overlay** (`bot` on strategies; `bot_title`, `bot_text`, `bot_label`, `bot_to`, `bot_repeat_next`) or in options marked `"interpretive": true`.
+   - Drop a tip only for harm or contradiction. Otherwise reword or label it.
+   - Only tag a tip `well_supported` if its own claim is rated moderate or higher.
+   - Bot copy never says "proven", "evidence-based", "dopamine" or "just" (the tests enforce this).
 2. **Don't overstate evidence.** Use the levels defined in `data/flowchart.json`.
 3. **Don't claim platform features we haven't verified.** Grok Bot facts in `docs/research-grok-bot.md` need a source link.
 4. **No personal health information** in issues, PRs or test fixtures.
@@ -20,7 +23,7 @@ Thank you for helping! This project is for people who find starting things hard,
 You need Python 3.9 or newer. There are no runtime dependencies.
 
 ```bash
-python -m unittest -v          # run all tests
+python3 -m unittest discover -s tests -v   # run all tests
 python -m get_unstuck validate # graph integrity check
 pip install jsonschema         # optional: enables the JSON Schema test (CI installs it)
 ```

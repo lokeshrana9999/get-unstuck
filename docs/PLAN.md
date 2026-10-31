@@ -1,5 +1,7 @@
 # Plan
 
+> **Superseded (2026-10-31) by [ACTION-PLAN.md](ACTION-PLAN.md),** which adds owners, gates and the changes prompted by the verdict. This file is kept for history.
+
 **Goal:** publish *Get Unstuck: Task Starter for ADHD & Executive Dysfunction* as a Grok Bot template. It should be faithful to the flowchart, honest about evidence, and safe by default.
 
 **Status (2026-10-31): planning.** The repo structure, data model, drafts and CLI prototype exist. The bot itself has not been created.

@@ -12,8 +12,8 @@ metadata:
 
 **Safety first:** if anything in the person's answers suggests crisis, self-harm or danger, stop and follow [guardrails §2](../../guardrails.md#2-crisis-and-safety).
 
-## A. MINDFULNESS (when the reason is "??? Not sure why")
-Chart: "Take 5 minutes to sit quietly and consider why. How about now?" *(evidence: weak. This is really reflection, not formal mindfulness.)*
+## A. PAUSE AND REFLECT (chart: MINDFULNESS; used when the reason is "??? Not sure why")
+Bot wording: "Pause and reflect: take 5 minutes to work out what's in the way. How about now?" *(reasonable but untested. This is reflection, not formal mindfulness, B7.)*
 - Offer to keep quiet for 5 minutes. Optionally set a timer, with a yes.
 - "I know why now!" → **"Great job! Go to Step 3."** → triage Step ③
 - "I still don't know…" → section B.
@@ -27,11 +27,15 @@ Chart: "Take 5 minutes to sit quietly and consider why. How about now?" *(eviden
 
 Then ask: **"Can the need be met right now, even partially?"**
 - **Yes!**
-  - EMOTIONAL → "Use DBT skills- fit the facts, opposite action, loving kindness. Go to Step 2."
-    - *Bot note:* the DBT skill is called "check the facts". Offer simple versions: "Does the feeling fit the facts of the situation?", "What would acting opposite to the urge look like?", "A kind phrase to yourself". DBT is a full multi-week programme, so mention a therapist if this comes up often.
+  - EMOTIONAL → bot wording: "Check the facts: is the feeling proportionate to what's actually true? Then try the opposite action. Go to Step 2."
+    - The chart says "fit the facts", but the DBT skill is called **check the facts** (D2). A kind phrase to yourself is optional. These skills come from DBT, a full multi-week programme, so mention a therapist if this comes up often.
   - PHYSICAL → "Attend to the need. Go to Step 2"
-    - Meds: *only* "Have you taken any medication you're prescribed?" Never advise on medication.
-    - Water: ⚠ unless on fluid restrictions. Food: if hungry. Rest, sensory: reduce noise or light. Movement: gentle and optional.
+    - Meds: *only* "Have you taken any medication you're prescribed, as prescribed?" Never advise on starting, stopping, timing or dose.
+    - Rest/sleep: the best-supported item, along with prescribed meds (D1).
+    - Water: only if they're not on fluid restrictions.
+    - Food: if they're hungry. Ask once and don't push.
+    - Sensory: reduce noise or light.
+    - Movement: gentle, optional, and only if it's safe for their body.
   - → triage Step ②
 - "Need can't be met" → **extension-or-delegate** (Step ④)
 

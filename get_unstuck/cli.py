@@ -3,6 +3,7 @@
 Usage:
     python -m get_unstuck                 # walk the chart from Step 1
     python -m get_unstuck --evidence      # also show evidence levels per tip
+    python -m get_unstuck --bot           # walk the bot adaptation instead of the chart
     python -m get_unstuck --start step3   # jump to a node
     python -m get_unstuck validate        # check data/flowchart.json integrity
     python -m get_unstuck list            # list node ids
@@ -38,26 +39,35 @@ def _wrap(text: str, indent: str = "") -> str:
 
 
 def render_node(chart: Flowchart, session: Session, show_evidence: bool) -> str:
-    node = session.node
+    node, nid, bot = session.node, session.current, session.bot
+    honesty_labels = chart.data.get("bot_honesty_labels", {})
     lines = []
-    header = node.get("title") or ""
+    header = chart.title(nid, bot)
     if node.get("step"):
         header = f"Step {node['step']}" + (f" - {header}" if header else "")
     if header:
         lines.append(f"== {header} ==")
-    if node.get("text"):
-        lines.append(_wrap(node["text"]))
-    for sid in node.get("strategies", []):
+    node_text = chart.text(nid, bot)
+    if node_text:
+        lines.append(_wrap(node_text))
+    for sid in chart.node_strategies(nid, bot):
         strat = chart.strategies[sid]
+        text = chart.strategy_text(sid, bot)
         # Don't repeat a strategy whose text is the node's own text.
-        if strat["text"] != node.get("text"):
-            lines.append(_wrap("- " + strat["text"], "  "))
+        if strat["text"] != node.get("text") and text != node_text:
+            lines.append(_wrap("- " + text, "  "))
+        if bot:
+            lines.append(_wrap(f"({honesty_labels.get(strat['bot']['honesty'], strat['bot']['honesty'])})", "    "))
         if show_evidence:
             ev = strat["evidence"]
             lines.append(_wrap(
                 f"[evidence: tip {_level(ev['claim'])}; nearest principle {_level(ev['principle'])}; "
                 f"see evidence_review.md {', '.join(ev['refs'])}]", "    "))
-        if strat.get("safety"):
+            if not bot and strat["bot"]["action"] != "keep":
+                adapted = strat["bot"].get("text", "(dropped)")
+                lines.append(_wrap(f"Bot version ({strat['bot']['action']}, not chart text): {adapted}", "    "))
+        # Safety notes describe the chart text; reworded bot copy carries its own caveats.
+        if strat.get("safety") and (not bot or strat["bot"]["action"] == "keep"):
             lines.append(_wrap("Safety: " + strat["safety"], "    "))
         if strat.get("bot_tip"):
             lines.append(_wrap("Tip (not from the chart): " + strat["bot_tip"], "    "))
@@ -72,13 +82,15 @@ def render_node(chart: Flowchart, session: Session, show_evidence: bool) -> str:
 
 
 def walk(chart: Flowchart, start: Optional[str] = None, show_evidence: bool = False,
-         stdin: TextIO = sys.stdin, stdout: TextIO = sys.stdout) -> int:
-    session = Session(chart, current=start or "")
+         stdin: TextIO = sys.stdin, stdout: TextIO = sys.stdout, bot: bool = False) -> int:
+    session = Session(chart, current=start or "", bot=bot)
 
     def say(text: str = "") -> None:
         print(text, file=stdout)
 
     say(DISCLAIMER)
+    say("Mode: bot adaptation (see docs/verdict-response.md)." if bot
+        else "Mode: faithful chart walk. Use --bot for the adapted bot flow.")
     say(HELP)
     while True:
         say()
@@ -123,6 +135,8 @@ def main(argv: Optional[list] = None) -> int:
     parser.add_argument("--data", help="path to flowchart.json (default: data/flowchart.json)")
     parser.add_argument("--start", help="node id to start from (default: step1)")
     parser.add_argument("--evidence", action="store_true", help="show evidence levels for each tip")
+    parser.add_argument("--bot", action="store_true",
+                        help="walk the bot adaptation (reworded tips, honesty tags, reroutes) instead of the chart")
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     args = parser.parse_args(argv)
 
@@ -140,4 +154,4 @@ def main(argv: Optional[list] = None) -> int:
         return 0
     if args.start and args.start not in chart.nodes:
         parser.error(f"unknown node '{args.start}'")
-    return walk(chart, start=args.start, show_evidence=args.evidence)
+    return walk(chart, start=args.start, show_evidence=args.evidence, bot=args.bot)

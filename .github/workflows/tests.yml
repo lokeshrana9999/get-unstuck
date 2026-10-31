@@ -25,4 +25,4 @@ jobs:
       - name: Validate flowchart graph
         run: python -m get_unstuck validate
       - name: Run tests
-        run: python -m unittest -v
+        run: python -m unittest discover -s tests -v

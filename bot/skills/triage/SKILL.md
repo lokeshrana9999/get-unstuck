@@ -30,10 +30,16 @@ Offer these as choices, using the person's own words where you can:
 | MOTIVATION: "I don't want to do it" | **make-it-tolerable** (starts with "Can you do it for just 10 minutes?") |
 | "??? Not sure why" | **wellbeing-check** (starts with MINDFULNESS) |
 | SENSORY & EMOTIONAL REGULATION: "I feel bad, upset, gross" | **wellbeing-check** |
-| PERFECTIONISM: "It feels too hard or I'm afraid of failing" | **break-it-down** |
+| TOO HARD / AFRAID I'LL FAIL: "It feels too hard or I'm afraid of failing" (chart label: PERFECTIONISM, which the bot doesn't use, B6) | **break-it-down** |
 | PARALYSIS: "I don't know how to do it" | **break-it-down** |
 
 ## Bot behaviour
 - If the person's first message already tells you the reason ("I can't stop gaming"), you may skip straight to the matching row. Briefly confirm it: "Sounds like inertia, is that right?"
 - Re-entry: other skills send people back here with "Go to Step 2/3" or "Go through the flowchart again". Pick up at that step and don't restart the greeting.
 - If the person has looped through Step ③ three or more times, gently offer **extension-or-delegate** (Step ⑤).
+- When the person comes in already overwhelmed or upset, a quick needs check (sleep, prescribed meds taken, hunger, mood) is the best-supported first move (evidence_review.md D1). Offer **wellbeing-check** early instead of pushing on.
+
+## Closing every session (handles "did I forget?")
+Trouble remembering to act on intentions is part of why people get stuck (evidence_review.md A2). Anyone talking to the bot has remembered the task, at least for now, so the bot doesn't ask "did you forget?" at Step ②. Instead, **every session that doesn't end in "started" ends with**:
+1. a when-and-where plan: "At [time], at [place], I will [first physical action]";
+2. an optional reminder (routine R2), only if the person says yes.

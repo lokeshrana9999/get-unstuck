@@ -39,9 +39,9 @@ class SkillDraftTests(unittest.TestCase):
             for nid in (n.strip() for n in nodes.split(",")):
                 self.assertIn(nid, self.chart.nodes, f"{path}: unknown node {nid}")
                 covered.add(nid)
-        # every node tagged with a non-triage flow is covered by some skill
-        for nid, node in self.chart.nodes.items():
-            if node.get("flow"):
+        # every flow-tagged node the bot can reach is covered by some skill
+        for nid in self.chart.reachable(bot=True):
+            if self.chart.node(nid).get("flow"):
                 self.assertIn(nid, covered, f"node {nid} not referenced by any skill")
 
     def test_node_flows_are_skill_names(self):
