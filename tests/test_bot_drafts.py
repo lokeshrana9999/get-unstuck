@@ -8,8 +8,10 @@ from get_unstuck import load_flowchart
 
 ROOT = Path(__file__).resolve().parent.parent
 SKILLS = ROOT / "bot" / "skills"
-EXPECTED = {"triage", "break-it-down", "interrupt-inertia", "resist-impulses",
-            "make-it-tolerable", "wellbeing-check", "extension-or-delegate"}
+# Flowchart flows (one skill each) plus skills outside the chart.
+FLOWS = {"triage", "break-it-down", "interrupt-inertia", "resist-impulses",
+         "make-it-tolerable", "wellbeing-check", "extension-or-delegate"}
+EXPECTED = FLOWS | {"onboarding"}
 
 
 def frontmatter(path):
@@ -36,7 +38,7 @@ class SkillDraftTests(unittest.TestCase):
             self.assertRegex(fm, rf"(?m)^name: {re.escape(path.parent.name)}$")
             self.assertRegex(fm, r"(?m)^description: \S")
             nodes = re.search(r"flowchart_nodes: \[(.*?)\]", fm).group(1)
-            for nid in (n.strip() for n in nodes.split(",")):
+            for nid in (n.strip() for n in nodes.split(",") if n.strip()):
                 self.assertIn(nid, self.chart.nodes, f"{path}: unknown node {nid}")
                 covered.add(nid)
         # every flow-tagged node the bot can reach is covered by some skill
@@ -47,7 +49,7 @@ class SkillDraftTests(unittest.TestCase):
     def test_node_flows_are_skill_names(self):
         for nid, node in self.chart.nodes.items():
             if "flow" in node:
-                self.assertIn(node["flow"], EXPECTED, nid)
+                self.assertIn(node["flow"], FLOWS, nid)
 
     def test_guardrails_include_required_items(self):
         text = (ROOT / "bot" / "guardrails.md").read_text(encoding="utf-8")
